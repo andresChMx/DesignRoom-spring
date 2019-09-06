@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head></h:head>
+    <body>
+
+        <ui:composition template="/WEB-INF/templates/master.xhtml">
+            <ui:define name="content">
+                <h:form id="frm">
+                    <p:growl id="men" />
+                    <p:toolbar>
+                        <f:facet name="right">
+                            <p:commandButton value="Nuevo" icon="ui-icon-document"
+                                             actionListener="#{muebleController.clearForm()}" update="@form" />
+
+                            <p:commandButton value="Guardar" icon="ui-icon-disk"
+                                             process="@this :frm:panGriMueble"
+                                             actionListener="#{muebleController.saveMueble()}"
+                                             update=":frm:men :frm:datTabMueble :frm:panGriMueble" />
+
+
+                            <p:commandButton value="Editar" icon="ui-icon-pencil"
+                                             process="@this"
+                                             actionListener="#{muebleController.editMueble()}"
+                                             update=":frm:men :frm:panGriMueble" />
+                            <p:commandButton value="Eliminar" icon="ui-icon-pencil"
+							process="@this"
+							actionListener="#{muebleController.deleteMueble()}"
+							update=":frm:men :frm:datTabMueble :frm:panGriMueble" />
+                        </f:facet>
+                    </p:toolbar>
+                    <p:panelGrid id="panGriMueble" columns="4" style="width:100%">
+                        <p:outputLabel value="Categoria:" for="cmbCate" />
+                        <p:selectOneMenu id="cmbCate" required="true" effect="drop"
+                                         value="#{muebleController.categoria}"
+                                         converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="Seleccione una opciÃ³n"
+                                          noSelectionOption="true" itemValue="" />
+                            <f:selectItems value="#{muebleController.categorias}"
+                                           var="Cate" itemLabel="#{Cate.nombre}" itemValue="#{Cate}" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="TiendaVirtual:" for="cmbCate2" />
+                        <p:selectOneMenu id="cmbCate2" required="true" effect="drop"
+                                         value="#{muebleController.tiendaVirtual}"
+                                         converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="Seleccione una opciÃ³n"
+                                          noSelectionOption="true" itemValue="" />
+                            <f:selectItems value="#{muebleController.tiendasVirtuales}"
+                                           var="Cate2" itemLabel="#{Cate2.nombre}" itemValue="#{Cate2}" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Nombre:" for="txtName" />
+                        <p:inputText id="txtName" required="true" maxlength="45"
+                                     value="#{muebleController.mueble.nombre}" />
+                        <p:outputLabel value="Alto:" for="spiAlto" />
+                        <p:inputText id="spiAlto" required="true" 
+                                     value="#{muebleController.mueble.alto}" />
+                        <p:outputLabel value="Ancho:" for="spiAncho" />
+                        <p:inputText id="spiAncho" required="true" 
+                                     value="#{muebleController.mueble.ancho}" />
+                        <p:outputLabel value="Largo:" for="spiLargo" />
+                        <p:inputText id="spiLargo" required="true" 
+                                     value="#{muebleController.mueble.largo}" />
+                        <p:outputLabel value="TDescripcion:" for="txtTDescripcion" />
+                        <p:inputText id="txtTDescripcion" required="true" maxlength="45"
+                                     value="#{muebleController.mueble.TDescripcion}" />
+                        <p:outputLabel value="Imagen:" for="txtImagen" />
+                        <p:inputText id="txtImagen" required="true" maxlength="255"
+                                     value="#{muebleController.mueble.imagen}" />
+                        <p:outputLabel value="Icono:" for="txtIcono" />
+                        <p:inputText id="txtIcono" required="true" maxlength="255"
+                                     value="#{muebleController.mueble.icono}" />
+
+                    </p:panelGrid>
+                    <br></br>
+
+                    <p:dataTable id="datTabMueble"
+                                 emptyMessage="No existen muebles registrados"
+                                 value="#{muebleController.muebles}" var="mueble"
+                                 paginator="true" rows="10" selectionMode="single"
+                                 rowKey="#{mueble.codMueble}">
+                        <f:facet name="header">
+                            <p:outputLabel value="Lista de Muebles" />
+                        </f:facet>
+                        <p:ajax event="rowSelect"
+                                listener="#{muebleController.selectMueble}" />
+
+                        <p:column headerText="codMueble">
+                            <p:outputLabel value="#{mueble.codMueble}" />
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            <p:outputLabel value="#{mueble.nombre}" />
+                        </p:column>
+                        <p:column headerText="Alto">
+                            <p:outputLabel value="#{mueble.alto}" />
+                        </p:column>
+                        <p:column headerText="Ancho">
+                            <p:outputLabel value="#{mueble.ancho}" />
+                        </p:column>
+                        <p:column headerText="Largo">
+                            <p:outputLabel value="#{mueble.largo}" />
+                        </p:column>
+                        <p:column headerText="Imagen">
+                            <p:outputLabel value="#{mueble.imagen}" />
+                        </p:column>
+                        <p:column headerText="Icono">
+                            <p:outputLabel value="#{mueble.icono}" />
+                        </p:column>
+                        <p:column headerText="Categoria">
+                            <p:outputLabel value="#{mueble.categoria.nombre}" />
+                        </p:column>
+                        <p:column headerText="TiendaVirtual">
+                            <p:outputLabel value="#{mueble.tiendaVirtual.nombre}" />
+                        </p:column>
+                        <p:column headerText="Descripcion">
+                            <p:outputLabel value="#{mueble.TDescripcion}" />
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

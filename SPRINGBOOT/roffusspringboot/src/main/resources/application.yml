@@ -1,0 +1,22 @@
+server:
+  port: 8081
+
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: productosapi
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+      use-new-id-generator-mappings: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  datasource:
+    url: jdbc:mysql://${DOCKER_HOST:localhost}/springroffus?serverTimezone=UTC
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
