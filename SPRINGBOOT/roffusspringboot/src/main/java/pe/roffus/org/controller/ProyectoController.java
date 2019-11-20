@@ -2,6 +2,7 @@ package pe.roffus.org.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pe.roffus.org.model.Mueble;
 import pe.roffus.org.model.Proyecto;
 import pe.roffus.org.model.Proyecto;
 import pe.roffus.org.service.ProyectoService;
@@ -39,5 +40,11 @@ public class ProyectoController {
     @RequestMapping(path="/{id}",method = RequestMethod.DELETE)
     Boolean delete(@PathVariable int id){
         return proyectoService.delete(id);
+    }
+
+    @CrossOrigin
+    @RequestMapping(path="/usuario/{id}",method = RequestMethod.GET)
+    public List<Proyecto> findMuebleBySubCategoria(@PathVariable int id){
+        return proyectoService.findProyectosByUsuario(id);
     }
 }
