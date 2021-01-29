@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import pe.roffus.org.model.Categoria;
 import pe.roffus.org.service.CategoriaService;
-
+/*    ${DOCKER_HOST:localhost}*/
 import java.util.List;
 
 @RestController

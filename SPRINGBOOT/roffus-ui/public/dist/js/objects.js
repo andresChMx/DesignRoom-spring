@@ -223,6 +223,7 @@
         this.lastPosY=0;
         this.mousePosX=0;
         this.mousePosY=0;
+        this.listObserversOnWindowMouseUp=[];
         let self=this;
         this.constructor=function(){
             self.initCanvas();
@@ -248,6 +249,7 @@
             self.fabric.on("mouse:down",self.mouseDown);
             self.fabric.on("mouse:move",self.mouseMove);
             self.fabric.on("mouse:up",self.mouseUp);
+            
             window.addEventListener("keyup",function(e){
                 if(e.keyCode==46){
                     let activeObj=this.canvas.fabric.getActiveObject();
@@ -262,6 +264,19 @@
                     }    
                 }
             });
+            window.addEventListener("mouseup",this.notifyOnWindowMouseUp.bind(this));
+        }
+        this.deleteActive=function(){
+            let activeObj=self.fabric.getActiveObject();
+            if(activeObj!=null && activeObj.type=='furniture'){
+                self.fabric.remove(self.fabric.getActiveObject())
+                for(let i=0;i<arrMuebles.length;i++){
+                    if(arrMuebles[i].fabric.codMueble==activeObj.codMueble){
+                        arrMuebles.splice(i,1);
+                        break;
+                    }
+                }
+            }  
         }
         this.mouseWheel=function(opt){
             var delta = -opt.e.deltaY;
@@ -309,6 +324,14 @@
               self.mousePosY=opt.e.clientY;
 
         }
+        this.notifyOnWindowMouseUp=function(e){
+            for(let i=0;i<this.listObserversOnWindowMouseUp.length;i++){
+                this.listObserversOnWindowMouseUp[i].notificationOnWindowMouseUp(e);
+            }
+        }
+        this.registerOnWindowMouseUp=function(obj){
+            this.listObserversOnWindowMouseUp.push(obj);
+        }
         this.constructor();
     }
 
@@ -327,12 +350,14 @@
             this.angle=0;
         let self=this;
         this.init=function(){
-            
+            this.objDB=obj;
             fabric.Image.fromURL(this.url,function(img){
                 self.fabric=img;
-                img.on("selected",self.isSelected)
-                img.on("deselected",self.isDeselected);
-                img.on("modified",self.isModified);
+                img.set("originX","center");
+                img.set("originY","center");
+                img.on("selected",self.isSelected.bind(this))
+                img.on("deselected",self.isDeselected.bind(this));
+                img.on("modified",self.isModified.bind(this));
                 if(!self.isloaded){
                     if(self.seguir){
                         img.set("left",canvas.mousePosX);
@@ -377,12 +402,15 @@
             this.angle=rot;
         }
         this.isSelected=function(){
+            panelMenuFlotante.show(self.fabric.get("left")+(canvas.fabric.viewportTransform[4]),self.fabric.get("top")+(canvas.fabric.viewportTransform[5])+40,self);
             self.setPanelStateInfo();
         }
         this.isModified=function(){
+            panelMenuFlotante.show(self.fabric.get("left")+(canvas.fabric.viewportTransform[4]),self.fabric.get("top")+(canvas.fabric.viewportTransform[5])+40,self);
             self.setPanelStateInfo();
         }
         this.isDeselected=function(){
+            panelMenuFlotante.hidde();
             panelStateInfo.hidde();
         }
         this.setPanelStateInfo=function(){
@@ -398,4 +426,5 @@
     function init(){
         canvas=new Canvas();
         dialogeBox=document.querySelector(".dialoguebox");
+        panelUser.setCanvasManger(canvas);
     }

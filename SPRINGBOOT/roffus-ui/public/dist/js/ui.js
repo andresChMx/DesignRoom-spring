@@ -1,3 +1,72 @@
+var panelDetails={
+    trigger:null,
+    closer:[],
+    elem:null,
+    init:function(){
+        this.elem=document.querySelector(".panel-detalles");
+        //this.trigger=document.querySelector(".panel-main .options .menu .btn-room");
+        this.closer=document.querySelectorAll(".panel-detalles .btn-close");
+
+        this.name=document.querySelector(".panel-detalles .title");
+        this.image=document.querySelector(".panel-detalles__main__imagen img");
+        this.description=document.querySelector(".panel-detalles__main__informacion__descripcion");
+        this.price=document.querySelector(".panel-detalles__main__informacion__footer .precio");
+        this.dimentions=document.querySelectorAll(".panel-detalles__main__informacion__sizes");
+        this.linkStore=document.querySelector(".panel-detalles__main__informacion__footer .btn-visitar");
+        //this.trigger.addEventListener("click",this.trigger_fired);
+        for(var i=0;i<this.closer.length;i++){this.closer[i].addEventListener("click",this.closer_fired)}
+    },
+    trigger_fired:function(furnitureModel){
+        let self=panelDetails;
+        console.log(furnitureModel.nombreMueble);
+        self.name.textContent=furnitureModel.nombreMueble;
+        self.image.setAttribute("src",furnitureModel.imagen);
+        self.description.textContent=furnitureModel.descripcion +"elit. Suspendisse at consectetur metus, at fermentum leo. Phasellus at velit imperdiet, hendrerit felis fermentum, auctor ante. Sed feugiat sapien mi, ac eleifend ex semper at. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at felis lorem. Aliquam at elit pulvinar, interdum sem ac, elementum dolor.";
+        self.price.textContent="s/ 2000.0";
+        self.linkStore.setAttribute("href","http://google.com");
+        self.dimentions[0].textContent="Ancho: "+furnitureModel.ancho + " cm";
+        self.dimentions[1].textContent="Largo: " + furnitureModel.largo + " cm";
+        self.dimentions[2].textContent="Alto: " + furnitureModel.alto + "cm";
+
+        self.elem.style.display="block";
+
+    },
+    closer_fired:function(){
+        panelDetails.elem.style.display="none";
+    }
+}
+var panelMenuFlotante={
+    trigger:null,
+    elem:null,
+    furnitureCaring:null,
+    init:function(){
+        this.elem=document.querySelector(".floating-menu");
+        this.btnBorrar=document.querySelector(".floating-menu__delete");
+        this.btnDetails=document.querySelector(".floating-menu__detalles");
+        this.btnBorrar.addEventListener("click",function(){
+            canvas.deleteActive();
+            this.hidde();
+        }.bind(this));
+        this.btnDetails.addEventListener("click",function(){
+            if(this.furnitureCaring){
+                panelDetails.trigger_fired(this.furnitureCaring.objDB)
+            }
+        }.bind(this));
+    },
+    show:function(x,y,furniture){
+        let self=panelMenuFlotante;
+        self.furnitureCaring=furniture;
+        self.elem.style.left=x-self.elem.offsetWidth/2 +"px";
+        self.elem.style.top=y-self.elem.offsetHeight/2 + "px";
+    }
+    ,hidde:function(){
+        let self=panelMenuFlotante;
+        this.furnitureCaring=null;
+        self.elem.style.left=-100+"px";
+        self.elem.style.top=-100 + "px";
+    }
+
+}
 var panelProject={
     trigger:null,
     closer:[],
@@ -42,35 +111,34 @@ var panelUser={
     closer:null,
     elem:null,
     readyToClose:false,
+    canvasManager:null,
+    isActive:false,
+    setCanvasManger:function(obj){
+        panelUser.canvasManager=obj;
+        panelUser.canvasManager.registerOnWindowMouseUp(panelUser);
+    },
     init:function(){
-        this.elem=document.querySelector(".panel-main .options .user-panel");
+        this.elem=document.querySelector(".user-panel");
         this.trigger=document.querySelector(".panel-main .options .btn-session");
-        this.closer=document.querySelectorAll("body");
-        ///////////////////////
-        console.log(this.closer.length);
-        for(var i=0;i<this.closer.length;i++){this.closer[i].addEventListener("click",this.closer_fired)}    
         this.trigger.addEventListener("click",this.trigger_fired);
     },
     trigger_fired:function(){
-        if(!panelUser.readyToClose){
-        panelUser.elem.classList.remove("fadeOut");
-        panelUser.elem.classList.add("fadeIn");
         panelUser.elem.style.display="block";
-        setTimeout(function(){panelUser.readyToClose=true},100)
-        }
+        setTimeout(function(){panelUser.isActive=true; },10);
+        
     },
-    closer_fired:function(){
-        if(panelUser.readyToClose){
-            panelUser.readyToClose=false;
-            panelUser.elem.classList.add("fadeOut");
-            panelUser.elem.classList.remove("fadeIn");
-            panelUser.elem.addEventListener("animationend",panelUser.animationend);
+    notificationOnWindowMouseUp:function(e){
+        
+        if(panelUser.isActive){
+            if(e.target.getAttribute("type") !="panelUser"){
+                panelUser.elem.style.display="none";
+                panelUser.isActive=false;
+            }else if(e.target.classList.contains("btn-logout")){
+                panelUser.elem.style.display="none";
+                panelUser.isActive=false;
+            }
+
         }
-    },
-    animationend:function(e){
-        console.log("asdf");
-        e.target.removeEventListener("animationend",panelUser.animationend);
-        e.target.style.display="none";
     }
 }
 var panelCategories={

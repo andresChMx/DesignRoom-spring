@@ -23,15 +23,6 @@ class DesignerHeader extends React.Component{
             </div>
             <div className="options">
               <div className="btn-session clearfix"><i className="fa fa-user fa-2x"></i>
-                <div className="user-panel animated fadeIn faster">              
-                  <div className="icon-container">
-                    <div className="icon"></div>
-                  </div>
-                  <div className="info">
-                    <p className="email">andreschoquemx@gmail.com</p>
-                    <button className="btn btn-logout">cerrar sesion</button>
-                  </div>
-                </div>
               </div>
               <ul className="menu">
                 <li className="btn-project"><i className="fa fa-file-o fa-lg"></i></li>

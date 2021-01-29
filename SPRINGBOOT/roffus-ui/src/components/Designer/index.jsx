@@ -6,6 +6,7 @@ import DesignerCategories from './DesignerCategories';
 import DesignerProject from './DesignerProject';
 import DesignerStateInfo from './DesignerStateInfo';
 import DesignerRoom from './DesignerRoom';
+import DesignerDetails from './DesignerDetalils';
 import Styles from './css/styles.css';
 import StylesFont from "./css/font-awesome.css";
 
@@ -34,8 +35,8 @@ class Designer extends React.Component{
         this.abrirProyecto=this.abrirProyecto.bind(this);
     };
     componentDidMount(){
-        window.initUI();
         window.init();
+        window.initUI();
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.actionType===INSERTAR_PLANTILLA){
@@ -44,21 +45,23 @@ class Designer extends React.Component{
             this.setState({plantillaActual:nextProps.respuesta});
             if(this.state.proyectoState==window.DesignerProjectStates.created){
                 this.guardarPaquete(nextProps.respuesta);
-                window.showMessage("Guardado exitosamente");
-            }
 
-            this.setState({proyectoState:window.DesignerProjectStates.saved});
+            }
         }else if(nextProps.actionType===INSERTAR_LISTAMUEBLES){
             console.log(nextProps.respuesta);
         }else if(nextProps.actionType===INSERTAR_PROYECTO){
             console.log(nextProps.respuesta);
             this.setState({proyectoActual:nextProps.respuesta});
             this.props.fetchListaProyectos();
+
+            window.showMessage("Guardado exitosamente");
+            this.setState({proyectoState:window.DesignerProjectStates.saved});
         }else if(nextProps.actionType===BORRAR_LISTAMUEBLES_POR_NOMBRE){
             let listaGenerada=window.generateListaMuebles(this.state.nombreListaMuebles);
             console.log(listaGenerada);
             this.props.postListaMuebles(JSON.stringify(listaGenerada));
-            window.showMessage("Guardado exitosamente");
+            window.showMessage("Sobreescrito exitosamente");
+
         }
     }
     componentWillUnmount(){
@@ -76,6 +79,7 @@ class Designer extends React.Component{
             }
         }),function(){
             this.props.postProyecto(JSON.stringify(this.state.proyectoActual));
+
         });
 
     }
@@ -134,8 +138,24 @@ class Designer extends React.Component{
                 <DesignerCategories/>
                 <DesignerStateInfo/>
                 <DesignerRoom cambiarPlantilla={this.cambiarPlantilla} globalPlantilla={this.state.plantillaActual}/>
-                <DesignerProject crearNuevoProyecto={this.crearNuevoProyecto} abrirProyecto={this.abrirProyecto} globalProyectoActual={this.state.proyectoActual}/>
+                <DesignerProject crearNuevoProyecto={this.crearNuevoProyecto} abrirProyecto={this.abrirProyecto} />
+                <DesignerDetails/>
                 <div className="dialoguebox"></div>
+
+                <div className="user-panel" type="panelUser">              
+                  <div className="icon-container"  type="panelUser">
+                    <div className="icon"  type="panelUser"></div>
+                  </div>
+                  <div className="info"  type="panelUser">
+                    <p className="email"  type="panelUser">andreschoquemx@gmail.com</p>
+                    <button className="btn btn-logout"  type="panelUser">cerrar sesion</button>
+                  </div>
+                </div>
+
+                <div className="floating-menu clearfix">
+                    <div className="floating-menu__delete"><i className="fa fa-trash fa-lg"></i></div>
+                    <div className="floating-menu__detalles"><i className="fa fa-arrow-circle-right fa-lg"></i></div>
+                </div>
             </React.Fragment>
         );
     }

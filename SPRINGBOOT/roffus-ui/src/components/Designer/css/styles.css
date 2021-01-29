@@ -71,36 +71,37 @@ body {
     .panel-main .options .btn-session i:hover {
       color: #86a146; }
 
-.panel-main .options .btn-session .user-panel {
+.user-panel {
   animation-duration: 400ms;
   display: none;
   position: absolute;
   background: #313439;
   right: 10px;
-  top: 100%;
+  top: 72px;
   float: right;
   height: 70px;
   padding: 10px;
   box-sizing: content-box; }
-  .panel-main .options .btn-session .user-panel .icon-container {
+.user-panel .icon-container {
     float: left;
     background: white;
     width: 30%;
     height: 100%;
     position: relative; }
-    .panel-main .options .btn-session .user-panel .icon-container .icon {
+ .user-panel .icon-container .icon {
       width: 100%;
       height: 100%; }
-  .panel-main .options .btn-session .user-panel .info {
+.user-panel .info {
     padding-left: 10px;
     width: 70%;
     height: 100%;
     float: right; }
-    .panel-main .options .btn-session .user-panel .info .email {
+.user-panel .info .email {
+  color:white;
       height: 50%;
       margin: 0;
       overflow: hidden; }
-    .panel-main .options .btn-session .user-panel .info .btn-logout {
+.user-panel .info .btn-logout {
       float: right;
       font-size: 0.9em;
       height: 50%;
@@ -135,7 +136,7 @@ body {
 
 .panel-categories {
   text-align:left !important;
-  width: 200px;
+  width: 240px;
   position: absolute;
   top: 0;
   background: #4f535a;
@@ -180,21 +181,23 @@ body {
 
 .panel-categories .main .list-categories {
   list-style: none;
-  padding: 0; }
+  padding: 0 10px; }
   .panel-categories .main .list-categories .item {
     font-size: 0.86em;
-    padding: 4px 20px;
+    padding: 12px 20px;
+    border-bottom:1px solid rgba(255, 255, 255, 0.479);
     cursor: pointer; }
     .panel-categories .main .list-categories .item:hover {
       color: #17b3b3; }
 
 .panel-categories .main .list-subcategories {
   list-style: none;
-  padding: 0;
+  padding: 0 10px;
   display: none; }
   .panel-categories .main .list-subcategories .item {
     font-size: 0.86em;
-    padding: 4px 20px;
+    padding: 12px 20px;
+    border-bottom:1px solid rgba(255, 255, 255, 0.479);
     cursor: pointer; }
     .panel-categories .main .list-subcategories .item:hover {
       color: #17b3b3; }
@@ -448,6 +451,107 @@ body {
 
 
 
+    .panel-detalles{
+      z-index:1000;
+      display:none;
+    }
+      .panel-detalles .container{
+        background:white;
+        position:absolute;
+        top:0;
+        left:0;
+        bottom:0;
+        right:0;
+        margin:auto;
+        width:900px;
+        height:415px;
+        z-index:100;
+      }
+      .panel-detalles .container .header{
+        text-align:left;
+        padding:20px;
+        font-size:1.2rem;
+        font-weight:bold;
+        background:rgb(255, 213, 75);
+      }
+      .panel-detalles .container .header .title{
+        float:left;
+      }
+      .panel-detalles .container .header .btn-close{
+        float:right;
+        cursor:pointer;
+      }
+      .panel-detalles .main{
+        background: white;
+      }
+      .panel-detalles__main__imagen{
+        float:left;
+        width:40%;
+        padding:20px 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .panel-detalles__main__imagen img{
+        width:100%;
+      }
+      .panel-detalles__main__informacion{
+        padding:20px 10px;
+        float: left;
+        width:60%;
+      }
+      .panel-detalles__main__informacion__titulo{
+        font-size: 1.1em;
+        font-weight: 500;
+        margin-bottom:5px;
+      }
+      .panel-detalles__main__informacion__descripcion{
+        margin-bottom:10px;
+      }
+      .panel-detalles__main__informacion__dimensiones{
+        margin-bottom:10px;
+      }
+      .panel-detalles__main__informacion__sizes{
+        margin-left:15px;
+      }
+      .panel-detalles__main__informacion__footer{
+        display:flex;
+        justify-content: space-between;
+      }
+      .panel-detalles__main__informacion__footer .precio{
+        font-size: 1.4em;
+        font-weight: 500;
+      }
+      .panel-detalles__main__informacion__footer .btn-visitar{
+        padding:4px;
+        background:transparent;
+        border:1px solid black;
+        color:black;
+        text-decoration: none;
+      }
+
+      .root{
+        position:relative;
+      }
+
+
+.floating-menu{
+  top:-100;
+  left:-100;
+  position:absolute;
+  z-index:10;
+  background:rgb(53, 53, 53);
+  color:rgba(255, 255, 255, 0.623);
+}
+.floating-menu div{
+  cursor:pointer;
+  float:left;
+  justify-content: center;
+  align-items:center;
+  display:flex;
+  width:30px;
+  height:30px;
+}
 .panel-stateinfo {
   color: #fff1f1;
   display:none;

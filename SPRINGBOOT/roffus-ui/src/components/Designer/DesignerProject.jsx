@@ -35,9 +35,11 @@ class DesignerProject extends React.Component{
         this.props.fetchListaProyectos();
     }
     componentWillReceiveProps(nextProps){
+        console.log(nextProps);
         if(nextProps.actionType===LISTAR_PROYECTOS){
             console.log(nextProps.respuesta);
             this.setState({proyectos:nextProps.respuesta});
+
           }else if(nextProps.actionType==BORRAR_PROYECTO_POR_ID){
             this.props.fetchListaProyectos();
           }
@@ -50,15 +52,15 @@ class DesignerProject extends React.Component{
              window.panelProject.closer_fired();
               //this.props.setGlobalPlantilla({diseno:JSON.parse(newJson)+"",ancho:nextProps.respuesta.ancho,largo:nextProps.respuesta.largo,alto:nextProps.respuesta.alto});
           }else if(nextProps.actionType==LISTAR_LISTAMUEBLES_POR_NOMBRE){
-              console.log(nextProps.respuesta);
-              window.cleanListaMuebles();
-              window.loadFurnitures(nextProps.respuesta);
-              window.showMessage("Proyecto \""+this.state.proyectoActual.nombrePaquete+"\" abierto");
+                window.cleanListaMuebles();
+                window.loadFurnitures(nextProps.respuesta);
+                window.showMessage("Proyecto \""+this.state.proyectoActual.nombrePaquete+"\" abierto");
           }else{
 
           }
     }
      btnAbrirProyecto(index){
+
         this.setState({proyectoActual:this.state.proyectos[index]})        
         this.props.fetchPlantillaXid(this.state.proyectos[index].plantilla.codPlantilla);
         this.props.fetchListaMueblesXnombre(this.state.proyectos[index].listaMuebles);
@@ -67,7 +69,7 @@ class DesignerProject extends React.Component{
         //this.listarMueblesXlistaMuebles();
     };
     btnBorrarProyecto(index){
-        if(this.state.proyectos[index].codPaquete==this.props.globalProyectoActual.codPaquete){
+        if(this.state.proyectos[index].codPaquete==this.state.proyectoActual.codPaquete){
             window.showMessage("No permitido : el proyecto esta abierto");
             return;
         }
@@ -87,6 +89,7 @@ class DesignerProject extends React.Component{
         window.cleanListaMuebles();
         window.addRoom([{x:-0.5,y:-0.5},{x:0.5,y:-0.5},{x:0.5,y:0.5},{x:-0.5,y:0.5}],parseInt(this.state.plantillaAncho),parseInt(this.state.plantillaLargo));
         window.panelProject.closer_fired();
+
         window.showMessage("Proyecto \"" + this.state.proyectoNombre + "\" creado");
     };
     //=============================

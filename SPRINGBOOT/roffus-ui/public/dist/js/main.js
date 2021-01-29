@@ -1,6 +1,8 @@
 window.DesignerProjectStates={empty:'empty',created:'created',saved:'saved'};
 var flag=false;
 function initUI(){
+  panelDetails.init();
+  panelMenuFlotante.init();
   panelProject.init();
   panelRoom.init();
   panelUser.init();
@@ -60,6 +62,7 @@ function cleanListaMuebles(){
     for(var i=0;i<arrMuebles.length;i++){
       canvas.fabric.remove(arrMuebles[i].fabric);
     }
+    canvas.fabric.renderAll();
     arrMuebles=[];
 }
 
