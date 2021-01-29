@@ -6,11 +6,11 @@ Web application that allows you to design a home room on a 2D plan. In it, one c
 
 #### New Proyect view
 
-![](Website UI Gallery/new_project.JPG)
+![asdfasd](https://raw.githubusercontent.com/andresChMx/DesignRoom-spring/master/Website%20UI%20Gallery/new_project.JPG)
 
 #### Editor View
 
-![](Website UI Gallery\editor.JPG)
+![](https://raw.githubusercontent.com/andresChMx/DesignRoom-spring/master/Website%20UI%20Gallery/editor.JPG)
 
 +
 
